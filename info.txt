@@ -1,6 +1,10 @@
 curl https://ollama.ai/install.sh -o install.sh
 curl https://ollama.ai/install.sh | sh
 
+ollama serve
+sudo lsof -i :11434
+command -v systemctl >/dev/null && sudo systemctl stop ollama
+
 ollama run llama2
 ollama run deepseek-coder
 ollama run mistral
