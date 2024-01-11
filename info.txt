@@ -24,7 +24,9 @@ ls -ltra /usr/share/ollama/.ollama/models/blobs/
 
 apt-get install jq -y
 pip install Pygments -y
-Use curl with jq: Once jq is inst
+
+#Use curl with jq: Once jq is inst
+
 curl http://127.0.0.1:11434/
 curl http://127.0.0.1:11434/ | jq .
 curl http://127.0.0.1:11434/ | pygmentize -l console
