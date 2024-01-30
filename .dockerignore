@@ -7,3 +7,4 @@ llm/llama.cpp/ggml
 llm/llama.cpp/gguf
 .env
 .cache
+test_data
