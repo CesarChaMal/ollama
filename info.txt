@@ -1,5 +1,6 @@
 curl https://ollama.ai/install.sh -o install.sh
 curl https://ollama.ai/install.sh | sh
+curl -fsSL https://ollama.com/install.sh | sh
 
 ollama serve
 sudo lsof -i :11434
