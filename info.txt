@@ -1,22 +1,104 @@
+https://klu.ai/glossary/ollama
+https://ollama.com/search?q=&p=1
+
 curl https://ollama.ai/install.sh -o install.sh
 curl https://ollama.ai/install.sh | sh
 curl -fsSL https://ollama.com/install.sh | sh
+
+sudo systemctl daemon-reload
+sudo systemctl enable ollama
+sudo systemctl stop ollama
+sudo systemctl start ollama
+sudo systemctl status ollama
+
+# create ollama user
+sudo useradd -r -s /bin/false -m -d /usr/share/ollama ollama
+
+# Create a service file in /etc/systemd/system/ollama.service:
+------------------------
+[Unit]
+Description=Ollama Service
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/ollama serve
+User=ollama
+Group=ollama
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target
+------------------------
+
+# Start the service 
+sudo systemctl daemon-reload
+sudo systemctl enable ollama
+
+# start ollama
+sudo systemctl start ollama
+
+# update
+curl -fsSL https://ollama.com/install.sh | sh
+
+# logs
+journalctl -u ollama
+
+# uninstall
+sudo systemctl stop ollama
+sudo systemctl disable ollama
+sudo rm /etc/systemd/system/ollama.service
+sudo rm $(which ollama)
+sudo rm -r /usr/share/ollama
+sudo userdel ollama
+sudo groupdel ollama
+
 
 ollama serve
 sudo lsof -i :11434
 command -v systemctl >/dev/null && sudo systemctl stop ollama
 
-ollama run llama2
-ollama run deepseek-coder
+ollama pull llama2:7b
+ollama stop llama2:7b
+ollama rum llama2:7b
+ollama run --gpu llama2:7b
+
+ollama run qwen:0.5b
+ollama run qwen:1.8b
+ollama run qwen:4b
+ollama run qwen:7b
+ollama run qwen:14b
+ollama run qwen:72b
+ollama run stable-code
+ollama run tinyllama
+ollama run stablelm2
+ollama run tinydolphin
+ollama run stablelm2
+ollama run stablelm2:zephyr
+ollama run starcoder:1b
+ollama run starcoder:3b
+ollama run starcoder:7b
+ollama run starcoder:15b
 ollama run mistral
+ollama run mistral:7b-instruct-q2_K
+ollama run mistral:7b-text-q2_K
+ollama run mistral:7b-instruct-q3_K_S
+ollama run mistral:7b-text-q3_K_S
+ollama run llama2:7b
+ollama run llama2:13b
+ollama run llama2
+ollama run llava
+ollama run codellama
+ollama run deepseek-coder
 ollama run deepseek-llm
 ollama run meditron
+ollama run orca
+ollama run orca-mini
+ollama run vicuna
+ollama run nous-hermes
+ollama run wizard-vicuna
 
-ollama rm llama2
-ollama rm deepseek-coder
-ollama rm mistral
-ollama rm deepseek-llm
-ollama rm meditron
+ollama rm $(ollama list | grep starcoder | awk '{print $1}')
 
 ls -ltra ~/.ollama
 ls -ltra ~/.ollama/models
